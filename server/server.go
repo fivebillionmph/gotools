@@ -63,7 +63,7 @@ func (self *Server) AddRouterPath(path string, method string, prefix bool, handl
 }
 
 func (self *Server) AddStaticRouterPathPrefix(path string, dir string) error {
-	self.router.PathPrefix(path).Handler(http.StripPrefix(path+"/", http.FileServer(http.Dir(dir))))
+	self.router.PathPrefix(path).Handler(http.StripPrefix(path + "/", http.FileServer(http.Dir(dir))))
 	return nil
 }
 
