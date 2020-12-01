@@ -36,11 +36,11 @@ func New(logfile string, port int) (*Server, error) {
 	return server, nil
 }
 
-func (self *Server) Start() {
+func (self *Server) Start() error {
 	self.http_server.Handle("/", self.router)
 	port_str := ":" + strconv.Itoa(self.port)
 	self.logger.Println("starting server on port " + port_str)
-	_ = http.ListenAndServe(port_str, self.http_server)
+	return http.ListenAndServe(port_str, self.http_server)
 }
 
 func (self *Server) AddRouterPath(path string, method string, prefix bool, handler func(http.ResponseWriter, *http.Request)) error {
