@@ -16,12 +16,12 @@ type DBType interface {
 	Name() string
 	Table_name() string
 	Db_fields() []string
-	New_from_json([]byte) (*DBObj, error)
-	Delete(*DBObj) error
-	Load_obj_from_row(SQLRowInterface) (*DBObj, error)
+	New_from_json([]byte) (DBObj, error)
+	Delete(DBObj) error
+	Load_obj_from_row(SQLRowInterface) (DBObj, error)
 }
 
-func Load_by_json(db *sql.DB, db_type *DBType, data []byte, limit int, offset int) (res []DBObj, err error) {
+func Load_by_json(db *sql.DB, db_type DBType, data []byte, limit int, offset int) (res []DBObj, err error) {
 	var args []interface{}
 	var predicate string
 	args, predicate, err = stmt_predicate(db, db_type, data, limit, offset)
@@ -31,17 +31,17 @@ func Load_by_json(db *sql.DB, db_type *DBType, data []byte, limit int, offset in
 	if err != nil { return }
 
 	res = make([]DBObj, 0, limit)
-	var single_result *DBObj
+	var single_result DBObj
 	for rows.Next() {
-		single_result, err = (*db_type).Load_obj_from_row(rows)
+		single_result, err = db_type.Load_obj_from_row(rows)
 		if err != nil { return }
-		res = append(res, *single_result)
+		res = append(res, single_result)
 	}
 
 	return
 }
 
-func Count_by_json(db *sql.DB, db_type *DBType, data[]byte) (count int, err error) {
+func Count_by_json(db *sql.DB, db_type DBType, data[]byte) (count int, err error) {
 	var args []interface{}
 	var predicate string
 	args, predicate, err = stmt_predicate(db, db_type, data, 1, 0)
@@ -51,7 +51,7 @@ func Count_by_json(db *sql.DB, db_type *DBType, data[]byte) (count int, err erro
 	return
 }
 
-func stmt_predicate(db *sql.DB, db_type *DBType, data []byte, limit int, offset int) (args []interface{}, predicate string, err error) {
+func stmt_predicate(db *sql.DB, db_type DBType, data []byte, limit int, offset int) (args []interface{}, predicate string, err error) {
 	var data_map map[string]string
 	err = json.Unmarshal(data, &data_map)
 	if err != nil { return }
@@ -80,7 +80,7 @@ func stmt_predicate(db *sql.DB, db_type *DBType, data []byte, limit int, offset 
 	args = append(args, limit)
 
 	predicate = `
-		FROM ` + (*db_type).Table_name() + `
+		FROM ` + db_type.Table_name() + `
 		` + where_str + `
 		ORDER BY id ASC
 		LIMIT ?, ?
@@ -89,8 +89,8 @@ func stmt_predicate(db *sql.DB, db_type *DBType, data []byte, limit int, offset 
 	return
 }
 
-func Is_valid_field(db_type *DBType, name string) bool {
-	fields := (*db_type).Db_fields()
+func Is_valid_field(db_type DBType, name string) bool {
+	fields := db_type.Db_fields()
 	for _, f := range fields {
 		if f == name {
 			return true

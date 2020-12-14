@@ -17,13 +17,13 @@ func New_server() *Server {
 	return &s
 }
 
-func (self *Server) Add_type(db_type *DBType) error {
+func (self *Server) Add_type(db_type DBType) error {
 	for _, dt := range self.db_types {
-		if dt.Name() == (*db_type).Name() {
+		if dt.Name() == db_type.Name() {
 			return errors.New("Duplicated type name: " + dt.Name())
 		}
 	}
-	self.db_types = append(self.db_types, *db_type)
+	self.db_types = append(self.db_types, db_type)
 
 	return nil
 }
