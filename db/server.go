@@ -10,6 +10,13 @@ type Server struct {
 	db_types []DBType
 }
 
+func New_server() *Server {
+	s := Server{
+		db_types: make([]DBType, 0),
+	}
+	return &s
+}
+
 func (self *Server) Add_type(db_type *DBType) error {
 	for _, dt := range self.db_types {
 		if dt.Name() == (*db_type).Name() {
