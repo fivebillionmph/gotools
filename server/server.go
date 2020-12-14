@@ -38,7 +38,7 @@ func New(logfile string, port int) (*Server, error) {
 
 func (self *Server) Start() error {
 	self.http_server.Handle("/", self.router)
-	port_str := ":" + strconv.Itoa(self.port)
+	port_str := "127.0.0.1:" + strconv.Itoa(self.port)
 	self.logger.Println("starting server on port " + port_str)
 	return http.ListenAndServe(port_str, self.http_server)
 }
