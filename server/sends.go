@@ -9,7 +9,7 @@ import (
 func Send_json_response(w http.ResponseWriter, status_code int, data interface{}) {
 	j_data, err := json.Marshal(data)
 	if err != nil {
-		Send_text_message(w, 500, "Unexpected error")
+		Send_text_response(w, 500, "Unexpected error")
 		return
 	}
 	w.WriteHeader(status_code)
@@ -17,7 +17,7 @@ func Send_json_response(w http.ResponseWriter, status_code int, data interface{}
 	w.Write(j_data)
 }
 
-func Send_text_message(w http.ResponseWriter, status_code int, message string) {
+func Send_text_response(w http.ResponseWriter, status_code int, message string) {
 	w.WriteHeader(status_code)
 	w.Write([]byte(message))
 }
