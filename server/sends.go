@@ -21,3 +21,12 @@ func Send_text_response(w http.ResponseWriter, status_code int, message string) 
 	w.WriteHeader(status_code)
 	w.Write([]byte(message))
 }
+
+func Send_redirect(w http.ResponseWriter, path string, permanent bool) {
+	w.Header().Set("Location", path)
+	if permanent {
+		w.WriteHeader(301)
+	} else {
+		w.WriteHeader(302)
+	}
+}
