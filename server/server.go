@@ -78,10 +78,22 @@ func (self *Server) AddStaticRouterPathPrefix(path string, dir string, before fu
 	return nil
 }
 
-func (self *Server) AddSingleFilePath(path string, html_file string, prefix bool) error {
-	parent_handler := func(w http.ResponseWriter, r *http.Request) {
+func (self *Server) AddSingleFilePath(path string, html_file string, prefix bool, before func(http.ResponseWriter, *http.Request) bool) error {
+	file_handler := func(w http.ResponseWriter, r *http.Request) {
 		self.logger.Printf("%s\t%s\t%s\n", r.Method, r.Header.Get("X-Forwarded-For"), r.URL.String())
 		http.ServeFile(w, r, html_file)
+	}
+
+	var parent_handler func(w http.ResponseWriter, r *http.Request)
+	if before == nil {
+		parent_handler = file_handler
+	} else {
+		parent_handler = func(w http.ResponseWriter, r *http.Request) {
+			cont := before(w, r)
+			if cont {
+				file_handler(w, r)
+			}
+		}
 	}
 
 	if prefix {
