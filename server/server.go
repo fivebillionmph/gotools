@@ -15,9 +15,10 @@ type Server struct {
 	logger      *log.Logger
 	router      *mux.Router
 	port        int
+	public      bool
 }
 
-func New(logfile string, port int) (*Server, error) {
+func New(logfile string, port int, public bool) (*Server, error) {
 	var f io.Writer
 	var err error
 	if logfile != "" {
@@ -32,15 +33,18 @@ func New(logfile string, port int) (*Server, error) {
 	http_server := http.NewServeMux()
 	router := mux.NewRouter()
 
-	server := &Server{http_server, logger, router, port}
+	server := &Server{http_server, logger, router, port, public}
 	return server, nil
 }
 
 func (self *Server) Start() {
 	self.http_server.Handle("/", self.router)
-	port_str := ":" + strconv.Itoa(self.port)
-	self.logger.Println("starting server on port " + port_str)
-	_ = http.ListenAndServe(port_str, self.http_server)
+	address_str := ":" + strconv.Itoa(self.port)
+	if public {
+		address_str = "0.0.0.0" + address_str
+	}
+	self.logger.Println("starting server on address " + address_str)
+	_ = http.ListenAndServe(address_str, self.http_server)
 }
 
 func (self *Server) AddRouterPath(path string, method string, prefix bool, handler func(http.ResponseWriter, *http.Request)) error {
