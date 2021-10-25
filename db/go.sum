@@ -1,0 +1,11 @@
+github.com/fivebillionmph/gotools v0.0.0-20201213042633-6df5d4837b4d h1:TOCqXgv3JX+soUJj+Cx12TI06SzgIRyFoU4G2OSNfzc=
+github.com/fivebillionmph/gotools v0.0.0-20201214062932-b34b72c7b016 h1:oCBuISjbvJ51a5bRBx+5QnkoJklLQ0Nkz9SLzVQZ840=
+github.com/fivebillionmph/gotools v0.0.0-20201214064513-b7051101021c h1:BJZgejjvq+aEfV6AtgDCuIwpA3YvUYtx7i2k89ItPqU=
+github.com/fivebillionmph/gotools/server v0.0.0-20201213042633-6df5d4837b4d h1:kNfN5R5S8pKapDdvejPu6IkDpCguqDQaFkysZ/Diw8I=
+github.com/fivebillionmph/gotools/server v0.0.0-20201213042633-6df5d4837b4d/go.mod h1:0NdH519I7BppWxQM2xVF/4aypDOcyKjdcq14VhFfroI=
+github.com/fivebillionmph/gotools/server v0.0.0-20201214062932-b34b72c7b016 h1:zHQ1MkYRdX8Dcae7mrp0uka4l82p/WC93oHcnM6gkDE=
+github.com/fivebillionmph/gotools/server v0.0.0-20201214062932-b34b72c7b016/go.mod h1:0NdH519I7BppWxQM2xVF/4aypDOcyKjdcq14VhFfroI=
+github.com/fivebillionmph/gotools/server v0.0.0-20201214064513-b7051101021c h1:czuZaxwyX2s4f26zz4XQ9qQOflEwCw1CeGuO25NkE34=
+github.com/fivebillionmph/gotools/server v0.0.0-20201214064513-b7051101021c/go.mod h1:0NdH519I7BppWxQM2xVF/4aypDOcyKjdcq14VhFfroI=
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
