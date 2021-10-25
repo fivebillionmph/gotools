@@ -40,11 +40,11 @@ func New(logfile string, port int, public bool) (*Server, error) {
 func (self *Server) Start() error {
 	self.http_server.Handle("/", self.router)
 	address_str := ":" + strconv.Itoa(self.port)
-	if public {
+	if self.public {
 		address_str = "0.0.0.0" + address_str
 	}
 	self.logger.Println("starting server on address " + address_str)
-	_ = http.ListenAndServe(address_str, self.http_server)
+	return http.ListenAndServe(address_str, self.http_server)
 }
 
 func (self *Server) AddRouterPath(path string, method string, prefix bool, handler func(http.ResponseWriter, *http.Request)) error {
